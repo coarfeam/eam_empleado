@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 @Entity
 @Table(
         name="employee",
@@ -26,20 +28,20 @@ public class Employee {
     private String apellido1;
     @Column(name = "apellido2", length = 100)
     private String apellido2;
-    @Column(name = "id_office", nullable = false)
-    @NotEmpty(message = "El nombre no puede estar vacio")
-    private Integer id_office;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_office", nullable = false)
+    private Office office;
 
     public Employee() {
     }
 
-    public Employee(Long id, String nif, String name, String apellido1, String apellido2, Integer id_office) {
+    public Employee(Long id, String nif, String name, String apellido1, String apellido2, Office office) {
         this.id = id;
         this.nif = nif;
         this.name = name;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
-        this.id_office = id_office;
+        this.office = office;
     }
 
     public Long getId() {
@@ -82,11 +84,11 @@ public class Employee {
         this.apellido2 = apellido2;
     }
 
-    public Integer getId_office() {
-        return id_office;
+    public Office getOffice() {
+        return office;
     }
 
-    public void setId_office(Integer id_office) {
-        this.id_office = id_office;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 }

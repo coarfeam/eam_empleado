@@ -2,6 +2,8 @@ package com.eamapp.empleados.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(
         name = "office",
@@ -11,7 +13,7 @@ import jakarta.persistence.*;
 public class Office {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "name", nullable = false, length = 100)
     private String name;
     @Column(name = "estimate")
@@ -19,21 +21,24 @@ public class Office {
     @Column(name = "expense")
     private Double expense;
 
+    @OneToMany(mappedBy="office")
+    private List<Employee> employees;
+
     public Office() {
     }
 
-    public Office(Integer id, String name, Double estimate, Double expense) {
+    public Office(Long id, String name, Double estimate, Double expense) {
         this.id = id;
         this.name = name;
         this.estimate = estimate;
         this.expense = expense;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
